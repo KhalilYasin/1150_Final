@@ -82,6 +82,7 @@ def create_document(data, image_name):
         names = ', '.join(recipe[name]['name'] for name in recipe)
         document.add_heading(names, 0)
         for rec in recipe:
+            document.add_heading(recipe[rec]['name'], level=1)
             document.add_paragraph(recipe[rec]['recipe'])
 
     document.save("recipes.docx")
