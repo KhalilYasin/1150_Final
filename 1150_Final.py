@@ -11,7 +11,7 @@ API_KEY = "6fe959d9f7971906d0cb9fa31671d876772c1b841405f91b914f2b55bd838257"
 URL = "https://taco-1150.herokuapp.com/random/?full_taco=true"
 FONT_FILE = "DejaVuSans.ttf"
 
-
+# this function is to search for image
 def search_image(tag):
     '''
     search and download one image with this tag
@@ -68,10 +68,12 @@ def make_request():
         sys.exit(1)
     return data
 
-
+# used a function to customize document
 def create_document(data, image_name, photo_info):
     document = Document()
+    # naming and adding heading
     document.add_heading("Random Taco Cookbook", 0)
+    # adding a picture
     document.add_picture(image_name, width=Inches(5.5))
     document.add_heading('Credits')
     document.add_paragraph('Taco image: ' + photo_info, style='List Bullet')
