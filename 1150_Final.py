@@ -5,7 +5,7 @@ from docx import Document
 from docx.shared import Inches
 from pyunsplash import PyUnsplash
 
-# api for unspash
+# api for unsplash
 API_KEY = "6fe959d9f7971906d0cb9fa31671d876772c1b841405f91b914f2b55bd838257"
 # taco api url
 URL = "https://taco-1150.herokuapp.com/random/?full_taco=true"
@@ -75,10 +75,13 @@ def create_document(data, image_name, photo_info):
     document.add_heading("Random Taco Cookbook", 0)
     # adding a picture
     document.add_picture(image_name, width=Inches(5.5))
+    # adding a heading
     document.add_heading('Credits')
+    # adding a paragraph
     document.add_paragraph('Taco image: ' + photo_info, style='List Bullet')
     document.add_paragraph('Tacos from: ' + URL, style='List Bullet')
     document.add_paragraph('Code by: Khalil', style='List Bullet')
+
     for recipe in data:
         document.add_page_break()
         names = ', '.join(recipe[name]['name'] for name in recipe)
