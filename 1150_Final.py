@@ -70,7 +70,7 @@ def make_request():
 
 
 def create_document(data, image_name):
-    document = Document()
+    document = Document('Code by: Khalil')
     document.add_heading("Random Taco Cookbook", 0)
     document.add_picture(image_name, width=Inches(5.5))
     document.add_heading('Credits')
