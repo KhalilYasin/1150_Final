@@ -69,14 +69,14 @@ def make_request():
     return data
 
 
-def create_document(data, image_name):
-    document = Document('Code by: Khalil')
+def create_document(data, image_name, photo_info):
+    document = Document()
     document.add_heading("Random Taco Cookbook", 0)
     document.add_picture(image_name, width=Inches(5.5))
     document.add_heading('Credits')
-    document.add_paragraph('Taco image: ', style='List Bullet')
-    document.add_paragraph('Tacos from: ', style='List Bullet')
-    document.add_paragraph('Code by: ', style='List Bullet')
+    document.add_paragraph('Taco image: ' + photo_info, style='List Bullet')
+    document.add_paragraph('Tacos from: ' + URL, style='List Bullet')
+    document.add_paragraph('Code by: Khalil', style='List Bullet')
     for recipe in data:
         document.add_page_break()
         names = ', '.join(recipe[name]['name'] for name in recipe)
@@ -89,12 +89,12 @@ def create_document(data, image_name):
 
 
 def main():
-    search_image('taco')
+    p = search_image('taco')
     resize_image()
     recipes = []
     for i in range(5):
         recipes.append(make_request())
-    create_document(recipes, 'taco.jpg')
+    create_document(recipes, 'taco_small.jpg', p)
 
 
 if __name__ == '__main__':
