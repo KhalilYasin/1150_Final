@@ -1,6 +1,5 @@
 import requests
 import sys
-import urllib.request
 from PIL import Image, ImageFont, ImageDraw
 from docx import Document
 from docx.shared import Inches
@@ -18,11 +17,15 @@ def search_image(tag):
     search and download one image with this tag
     '''
     # authenticate unsplash api
+
     try:
         py_un = PyUnsplash(api_key=API_KEY)
         search = py_un.search(type_='photos', query=tag)
         photos = [i.link_download for i in search.entries]
-        urllib.request.urlretrieve(photos[0], 'taco.jpg')
+        image_request = requests.get(photos[0], verify=False)
+        with open("taco.jpg", 'wb') as img:
+            img.write(image_request.content)
+        return photos[0]
     except:
         print("Error in search_image")
         sys.exit(1)
@@ -58,12 +61,30 @@ def make_request():
     this function returns data from taco api
     '''
     try:
-        data = requests.get(URL)
+        data = requests.get(URL, verify=False)
         data = data.json()
     except:
         print("Error requesting taco API")
         sys.exit(1)
     return data
+
+
+def create_document(data, image_name):
+    document = Document()
+    document.add_heading("Random Taco Cookbook", 0)
+    document.add_picture(image_name, width=Inches(5.5))
+    document.add_heading('Credits')
+    document.add_paragraph('Taco image: ', style='List Bullet')
+    document.add_paragraph('Tacos from: ', style='List Bullet')
+    document.add_paragraph('Code by: ', style='List Bullet')
+    for recipe in data:
+        document.add_page_break()
+        names = ', '.join(recipe[name]['name'] for name in recipe)
+        document.add_heading(names, 0)
+        for rec in recipe:
+            document.add_paragraph(recipe[rec]['recipe'])
+
+    document.save("recipes.docx")
 
 
 def main():
@@ -72,6 +93,7 @@ def main():
     recipes = []
     for i in range(5):
         recipes.append(make_request())
+    create_document(recipes, 'taco.jpg')
 
 
 if __name__ == '__main__':
