@@ -97,7 +97,11 @@ def create_document(data, image_name, photo_info):
 # after looping save the data in a word document
     document.save("recipes.docx")
 
-
+"""
+p = search_image('taco') will search in unsplash for one image that has 'taco' as tag. 
+resize_image() will resize that image (p), and that loop will store 5 recipes taken from that Taco API.
+create_document will use the resized image and the five recipes to create the book of recipes
+"""
 def main():
     p = search_image('taco')
     resize_image()
@@ -110,6 +114,9 @@ def main():
 if __name__ == '__main__':
     main()
 
+"""
+The End...
+"""
 
 
 
