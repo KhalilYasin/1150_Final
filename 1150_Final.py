@@ -1,3 +1,6 @@
+"""
+This is my final project. I chose the code that generates a recipe book from taco recipe including a random taco picture
+"""
 import requests
 import sys
 from PIL import Image, ImageFont, ImageDraw
