@@ -19,8 +19,8 @@ def search_image(tag):
     '''
     search and download one image with this tag
     '''
-    # authenticate unsplash api
 
+    # authenticate unsplash api
     try:
         py_un = PyUnsplash(api_key=API_KEY)
         search = py_un.search(type_='photos', query=tag)
@@ -45,7 +45,7 @@ def resize_image():
         sys.exit(1)
     width, height = im.size
     ratio = height / width
-    # set image to max 800 in width and height
+    # set image to max 800 in width and height avoiding all logical errors
     if (width > height):
         width = 800
         height = int(ratio * 800)
@@ -53,6 +53,7 @@ def resize_image():
         height = 800
         width = int(800 / ratio)
     im = im.resize((width, height), Image.ANTIALIAS)
+    # adding a font to the taco image
     font = ImageFont.truetype(FONT_FILE, 40)
     draw = ImageDraw.Draw(im)
     draw.text((0, 0), "Random Taco Cookbook", (255, 255, 255), font=font)
@@ -71,20 +72,21 @@ def make_request():
         sys.exit(1)
     return data
 
-# used a function to customize document
+# used a function to create & customize document
 def create_document(data, image_name, photo_info):
     document = Document()
     # naming and adding heading
     document.add_heading("Random Taco Cookbook", 0)
     # adding a picture
     document.add_picture(image_name, width=Inches(5.5))
-    # adding a heading
+    # adding and naming heading
     document.add_heading('Credits')
     # adding a paragraph
     document.add_paragraph('Taco image: ' + photo_info, style='List Bullet')
     document.add_paragraph('Tacos from: ' + URL, style='List Bullet')
     document.add_paragraph('Code by: Khalil', style='List Bullet')
 
+# this loops through the recipes in URL (taco recipes) and creates a document by listing them
     for recipe in data:
         document.add_page_break()
         names = ', '.join(recipe[name]['name'] for name in recipe)
@@ -92,7 +94,7 @@ def create_document(data, image_name, photo_info):
         for rec in recipe:
             document.add_heading(recipe[rec]['name'], level=1)
             document.add_paragraph(recipe[rec]['recipe'])
-
+# after looping save the data in a word document
     document.save("recipes.docx")
 
 
