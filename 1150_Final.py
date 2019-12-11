@@ -1,5 +1,5 @@
 """
-This is my final project. I chose the code that generates a recipe book from taco recipe including a random taco picture
+This is my final project. I chose the code that generates a recipe book from taco recipes including a random taco picture
 """
 import requests
 import sys
@@ -81,7 +81,7 @@ def create_document(data, image_name, photo_info):
     document.add_picture(image_name, width=Inches(5.5))
     # adding and naming heading
     document.add_heading('Credits')
-    # adding a paragraph
+    # adding lines under credits
     document.add_paragraph('Taco image: ' + photo_info, style='List Bullet')
     document.add_paragraph('Tacos from: ' + URL, style='List Bullet')
     document.add_paragraph('Code by: Khalil', style='List Bullet')
